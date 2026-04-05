@@ -76,6 +76,7 @@ const monthlyData = {
 };
 
 let chartInstance;
+const USERNAME_RULE = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{5,}$/;
 
 function safeNumber(value) {
   const num = Number.parseFloat(value);
@@ -293,10 +294,46 @@ function bindDownloadEvent() {
   });
 }
 
+function bindUsernameValidation() {
+  const usernameForm = document.getElementById("username-form");
+  const usernameInput = document.getElementById("username");
+  const feedback = document.getElementById("username-feedback");
+
+  if (!(usernameForm instanceof HTMLFormElement) || !(usernameInput instanceof HTMLInputElement) || !(feedback instanceof HTMLElement)) {
+    return;
+  }
+
+  usernameForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const normalizedValue = usernameInput.value.trim();
+    const isValid = USERNAME_RULE.test(normalizedValue);
+
+    usernameInput.value = normalizedValue;
+
+    if (!isValid) {
+      usernameInput.setCustomValidity("Username must include at least 1 uppercase letter, 1 number, 1 special character, and be 5+ characters.");
+      usernameInput.classList.add("is-invalid");
+      feedback.textContent = "Invalid username. Include at least 1 uppercase letter, 1 number, and 1 special character (minimum 5 characters).";
+      feedback.classList.remove("success");
+      feedback.classList.add("error");
+      usernameInput.reportValidity();
+      return;
+    }
+
+    usernameInput.setCustomValidity("");
+    usernameInput.classList.remove("is-invalid");
+    feedback.textContent = "Username submitted successfully.";
+    feedback.classList.remove("error");
+    feedback.classList.add("success");
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderMonthlyRows();
   bindInputEvents();
   initChart();
   bindTabEvents();
   bindDownloadEvent();
+  bindUsernameValidation();
 });
