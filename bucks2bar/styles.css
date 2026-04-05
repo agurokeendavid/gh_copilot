@@ -1,0 +1,180 @@
+:root {
+  --bg-a: #f2f6f8;
+  --bg-b: #d8e6ea;
+  --ink: #112026;
+  --muted: #4b656f;
+  --line: #d6e2e6;
+  --panel: rgba(255, 255, 255, 0.9);
+  --income: #2f8f73;
+  --expense: #c9503f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Space Grotesk", "Segoe UI", Tahoma, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 90% 15%, rgba(63, 145, 180, 0.18), transparent 35%),
+    radial-gradient(circle at 10% 0%, rgba(255, 164, 117, 0.22), transparent 32%),
+    linear-gradient(165deg, var(--bg-a), var(--bg-b));
+}
+
+.app-shell {
+  max-width: 980px;
+}
+
+.hero {
+  animation: rise-in 450ms ease-out both;
+}
+
+.eyebrow {
+  letter-spacing: 0.18em;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.display-title {
+  font-family: "Sora", "Segoe UI", sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+.panel {
+  backdrop-filter: blur(4px);
+  background: var(--panel);
+}
+
+.nav-tabs {
+  border-bottom-color: var(--line);
+}
+
+.nav-tabs .nav-link {
+  color: var(--muted);
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.nav-tabs .nav-link.active {
+  color: var(--ink);
+  border-color: var(--line) var(--line) #fff;
+  background: #fff;
+}
+
+.monthly-grid {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.grid-head,
+.grid-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+}
+
+.grid-head {
+  background: #f5fafb;
+  font-weight: 700;
+}
+
+.grid-row:nth-child(even) {
+  background: #fcfeff;
+}
+
+.cell {
+  padding: 0.8rem;
+  border-bottom: 1px solid var(--line);
+}
+
+#monthly-rows .grid-row:last-child .cell {
+  border-bottom: none;
+}
+
+.cell.month {
+  font-weight: 600;
+}
+
+.money-input {
+  width: 100%;
+  padding: 0.48rem 0.62rem;
+  border: 1px solid #cbd8dd;
+  border-radius: 9px;
+  color: var(--ink);
+}
+
+.money-input:focus {
+  border-color: #79a8b8;
+  box-shadow: 0 0 0 0.2rem rgba(121, 168, 184, 0.24);
+  outline: none;
+}
+
+.money-input.income {
+  border-left: 4px solid var(--income);
+}
+
+.money-input.expense {
+  border-left: 4px solid var(--expense);
+}
+
+.chart-wrap {
+  position: relative;
+  min-height: 380px;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+@keyframes rise-in {
+  from {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .grid-head,
+  .grid-row {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-head {
+    display: none;
+  }
+
+  .grid-row {
+    border-bottom: 1px solid var(--line);
+    padding: 0.2rem 0;
+  }
+
+  .grid-row .cell {
+    border-bottom: none;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .grid-row .cell.month {
+    font-size: 0.95rem;
+    color: var(--muted);
+    padding-bottom: 0.15rem;
+  }
+
+  .chart-wrap {
+    min-height: 320px;
+  }
+}
